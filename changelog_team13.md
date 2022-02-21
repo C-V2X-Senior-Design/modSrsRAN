@@ -6,9 +6,11 @@
 
 - added function `output_probe` to `cc_worker.cc` and `cc_worker.h`
 
+- added script `run_probe.sh` which refreshes the `probes` folder and runs `srsenb`
+
 ### Changed
 
-- silenced iq data output for now
+- commented out old iq data output for now
 
 ## [2022.2.4] port_local_changes
 
