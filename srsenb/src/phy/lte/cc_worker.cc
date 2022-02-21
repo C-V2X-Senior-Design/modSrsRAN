@@ -28,6 +28,9 @@
 #include <iomanip>
 #include <limits>
 
+#include <fstream>
+#include <ctime>
+
 #include "srsenb/hdr/phy/lte/cc_worker.h"
 
 #define Error(fmt, ...)                                                                                                \
@@ -44,6 +47,7 @@
   logger.debug(fmt, ##__VA_ARGS__)
 
 using namespace std;
+// using std::filesystem::exists;
 
 // Enable this to log SI
 //#define LOG_THIS(a) 1
@@ -697,10 +701,10 @@ int cc_worker::read_pusch_d(cf_t* pdsch_d)
   memcpy(pdsch_d, enb_ul.pusch.d, nof_re * sizeof(cf_t));
 
   // ADDED: ouput pusch to terminal
-  complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
-  for (int i=0; i < nof_re; i++){
-    cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
-  }
+  // complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
+  // for (int i=0; i < nof_re; i++){
+  //   cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
+  // }
 
   return nof_re;
 }
@@ -711,10 +715,10 @@ int cc_worker::read_pucch_d(cf_t* pdsch_d)
   memcpy(pdsch_d, enb_ul.pucch.z_tmp, nof_re * sizeof(cf_t));
 
   // ADDED: ouput pucch to terminal
-  complex<float>* pucch_array = (complex<float>*) enb_ul.pucch.z_tmp;
-  for (int i=0; i < nof_re; i++){  
-    cout << "6363" << ieee_float_to_hex(pucch_array[i].real()) << ieee_float_to_hex(pucch_array[i].imag()) << endl; //(*pucch).real() << " + " << (*pucch).imag() << "i"<< endl;
-  }
+  // complex<float>* pucch_array = (complex<float>*) enb_ul.pucch.z_tmp;
+  // for (int i=0; i < nof_re; i++){  
+  //   cout << "6363" << ieee_float_to_hex(pucch_array[i].real()) << ieee_float_to_hex(pucch_array[i].imag()) << endl; //(*pucch).real() << " + " << (*pucch).imag() << "i"<< endl;
+  // }
 
   return nof_re;
 }
@@ -739,3 +743,25 @@ string ieee_float_to_hex(float f)
     return stm.str() ;
 }
 
+// ADDED
+int output_probe(string text, string file_name){
+  // Call this function with `#include "srsenb/hdr/phy/lte/cc_worker.h"`
+  
+  // text refers to what you want to print
+  // file_name is the name of the file to be added to the probes/ directory
+
+  // example: output_probe(__FILE__, "rbgmask_t_probe.txt");
+
+  fstream outfile;
+  string file_path;
+
+  file_path = "/home/dragon/Code/modSrsRAN/probes/";
+  file_path.append(file_name);
+
+  outfile.open(file_path, ios_base::app);
+  if (outfile.is_open())
+    outfile << time(0) << ": " << text << endl;
+  else
+    cout << "Could Not Print " << endl;
+  return 0;
+}

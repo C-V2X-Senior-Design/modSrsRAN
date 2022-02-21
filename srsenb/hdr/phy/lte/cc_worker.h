@@ -130,4 +130,6 @@ private:
 
 std::string ieee_float_to_hex(float f);
 
+int output_probe(std::string text, std::string file_name);
+
 #endif // SRSENB_CC_WORKER_H

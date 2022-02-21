@@ -1,5 +1,15 @@
 # Changelog
 
+## [2022.2.21] add_probes
+
+### Added
+
+- added function `output_probe` to `cc_worker.cc` and `cc_worker.h`
+
+### Changed
+
+- silenced iq data output for now
+
 ## [2022.2.4] port_local_changes
 
 ### Added
