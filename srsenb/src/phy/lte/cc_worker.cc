@@ -32,6 +32,7 @@
 #include <ctime>
 
 #include "srsenb/hdr/phy/lte/cc_worker.h"
+#include "srsenb/hdr/stack/mac/sched_phy_ch/sched_phy_resource.h"
 
 #define Error(fmt, ...)                                                                                                \
   if (SRSRAN_DEBUG_ENABLED)                                                                                            \
@@ -761,6 +762,28 @@ int output_probe(string text, string file_name){
   outfile.open(file_path, ios_base::app);
   if (outfile.is_open())
     outfile << time(0) << ": " << text << endl;
+  else
+    cout << "Could Not Print " << endl;
+  return 0;
+}
+
+// ADDED 
+int probe_rbg_mask(srsenb::rbgmask_t mask, string file_name){
+  // print rbg_mask contents to file
+
+  fstream outfile;
+  string file_path;
+
+  char buf[512];
+  char output_buf[512];
+  strcpy(mask.to_string(buf), output_buf);
+
+  file_path = "/home/dragon/Code/modSrsRAN/probes/";
+  file_path.append(file_name);
+
+  outfile.open(file_path, ios_base::app);
+  if (outfile.is_open())
+    outfile << time(0) << ": " << output_buf << endl;
   else
     cout << "Could Not Print " << endl;
   return 0;

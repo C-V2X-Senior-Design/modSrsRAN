@@ -22,7 +22,9 @@
 #ifndef SRSENB_CC_WORKER_H
 #define SRSENB_CC_WORKER_H
 
+// ADDED
 #include <string.h>
+#include "srsenb/hdr/stack/mac/sched_phy_ch/sched_phy_resource.h"
 
 #include "../phy_common.h"
 #include "srsran/srslog/srslog.h"
@@ -128,8 +130,10 @@ private:
 } // namespace lte
 } // namespace srsenb
 
-std::string ieee_float_to_hex(float f);
 
+// ADDED
+std::string ieee_float_to_hex(float f);
 int output_probe(std::string text, std::string file_name);
+int probe_rbg_mask(srsenb::rbgmask_t mask, std::string file_name);
 
 #endif // SRSENB_CC_WORKER_H
