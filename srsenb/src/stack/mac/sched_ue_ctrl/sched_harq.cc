@@ -179,6 +179,9 @@ void dl_harq_proc::new_tx(const rbgmask_t& new_mask,
                           uint32_t         n_cce_,
                           uint32_t         max_retx_)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   n_cce   = n_cce_;
   rbgmask = new_mask;
   new_tx_common(tb_idx, tti_tx_dl, mcs, tbs, max_retx_);
@@ -191,6 +194,9 @@ void dl_harq_proc::new_retx(const rbgmask_t& new_mask,
                             int*             tbs,
                             uint32_t         n_cce_)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   n_cce   = n_cce_;
   rbgmask = new_mask;
   new_retx_common(tb_idx, tti_tx_dl, mcs, tbs);
@@ -208,6 +214,9 @@ uint32_t dl_harq_proc::get_n_cce() const
 
 rbgmask_t dl_harq_proc::get_rbgmask() const
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  
   return rbgmask;
 }
 
