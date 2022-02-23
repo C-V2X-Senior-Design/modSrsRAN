@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_grid.h"
 #include "srsenb/hdr/stack/mac/sched_helpers.h"
 #include "srsran/common/string_helpers.h"

@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_phy_ch/sched_phy_resource.h"
 extern "C" {
 #include "lib/include/srsran/phy/dft/dft_precoding.h"

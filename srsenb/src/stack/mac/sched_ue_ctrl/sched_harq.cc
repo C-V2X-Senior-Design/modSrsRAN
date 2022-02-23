@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include <string.h>
 
 #include "srsenb/hdr/stack/mac/sched.h"

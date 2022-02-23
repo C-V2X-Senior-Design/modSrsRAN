@@ -19,6 +19,10 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_ue_ctrl/sched_dl_cqi.h"
 #include "srsenb/hdr/stack/mac/schedulers/sched_base.h"
 
