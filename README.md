@@ -52,7 +52,7 @@ output_probe(text, file_name);
 
 * `file_name` is the name of the file/file path to be created/appended to in the `/probes` directory
 
-Lines in the output file will consist of a unix timestamp and the value of the `text` parameter. An example output can be found (here)[https://github.com/C-V2X-Senior-Design/modSrsRAN/blob/add_probes/probes/rbgmask_t_probe.txt]
+Lines in the output file will consist of a unix timestamp and the value of the `text` parameter. An example output can be found [here](https://github.com/C-V2X-Senior-Design/modSrsRAN/blob/add_probes/probes/rbgmask_t_probe.txt)
 
 Once all probes are added, run the following commands to generate your probe outputs:
 ```
