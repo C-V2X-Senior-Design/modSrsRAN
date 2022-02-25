@@ -8,6 +8,15 @@
 
 - added script `run_probe.sh` which refreshes the `probes` folder and runs `srsenb`
 
+- added probes to:
+	- `sched_grid.cc`
+	- `sched_base.cc`
+	- `sched_time_pf.cc`
+	- `sched_harq.cc`
+	- `sched_dl_cqi.cc`
+	- `sched_phy_resource.cc`
+	- `sched_ue.cc`
+
 ### Changed
 
 - commented out old iq data output for now
