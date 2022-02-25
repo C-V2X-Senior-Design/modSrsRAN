@@ -702,10 +702,11 @@ int cc_worker::read_pusch_d(cf_t* pdsch_d)
   memcpy(pdsch_d, enb_ul.pusch.d, nof_re * sizeof(cf_t));
 
   // ADDED: ouput pusch to terminal
-  // complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
-  // for (int i=0; i < nof_re; i++){
-  //   cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
-  // }
+  complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
+  for (int i=0; i < nof_re; i++){
+    cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
+  }
+  // ADD PROBE HERE
 
   return nof_re;
 }
