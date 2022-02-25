@@ -141,6 +141,7 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl", "sched_grid.txt");
 
   // Check RBG collision
   if ((dl_mask & alloc_mask).any()) {
@@ -184,6 +185,7 @@ alloc_result sf_grid_t::alloc_dl_ctrl(uint32_t aggr_idx, rbg_interval rbg_range,
 
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_ctrl", "sched_grid.txt");
 
   // allocate DCI and RBGs
   rbgmask_t new_mask(dl_mask.size());
@@ -196,6 +198,7 @@ alloc_result sf_grid_t::alloc_dl_data(sched_ue* user, const rbgmask_t& user_mask
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_data", "sched_grid.txt");
 
   srsran_dci_format_t dci_format = user->get_dci_format();
   uint32_t            nof_bits   = srsran_dci_format_sizeof(&cc_cfg->cfg.cell, nullptr, nullptr, dci_format);
@@ -252,6 +255,7 @@ void sf_grid_t::rem_last_alloc_dl(rbg_interval rbgs)
 
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("rem_last_alloc_dl", "sched_grid.txt");
 
   pdcch_alloc.rem_last_dci();
   rbgmask_t rbgmask(dl_mask.size());
@@ -482,6 +486,7 @@ alloc_result sf_sched::alloc_dl_user(sched_ue* user, const rbgmask_t& user_mask,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_user", "sched_grid.txt");
 
   if (data_allocs.full()) {
     logger.warning("SCHED: Maximum number of DL allocations reached");
