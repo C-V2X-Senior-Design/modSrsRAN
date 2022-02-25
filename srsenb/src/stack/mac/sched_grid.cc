@@ -167,6 +167,9 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
   // Allocate RBGs
   dl_mask |= alloc_mask;
 
+  // ADDED
+  probe_rbg_mask(alloc_mask, "sched_grid.txt");
+
   return alloc_result::success;
 }
 
@@ -487,6 +490,7 @@ alloc_result sf_sched::alloc_dl_user(sched_ue* user, const rbgmask_t& user_mask,
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
   output_probe("alloc_dl_user", "sched_grid.txt");
+  probe_rbg_mask(user_mask, "sched_grid.txt");
 
   if (data_allocs.full()) {
     logger.warning("SCHED: Maximum number of DL allocations reached");

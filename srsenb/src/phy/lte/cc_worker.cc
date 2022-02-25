@@ -774,16 +774,24 @@ int probe_rbg_mask(srsenb::rbgmask_t mask, string file_name){
   fstream outfile;
   string file_path;
 
-  char buf[512];
-  char output_buf[512];
-  strcpy(mask.to_string(buf), output_buf);
-
+  string s;
+  s.assign(mask.size(), '0');
+  
   file_path = "/home/dragon/Code/modSrsRAN/probes/";
   file_path.append(file_name);
 
   outfile.open(file_path, ios_base::app);
-  if (outfile.is_open())
-    outfile << time(0) << ": " << output_buf << endl;
+  if (outfile.is_open()){
+    outfile << time(0) << ": ";
+
+    outfile << "size: " << mask.size() << ", ";
+
+    for (size_t i = mask.size(); i > 0; --i) {
+      outfile << (mask.test(i - 1) ? '1' : '0');
+    }
+
+    outfile << endl;
+  }
   else
     cout << "Could Not Print " << endl;
   return 0;
