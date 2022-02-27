@@ -37,7 +37,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build srsRAN on aarch64
-      uses: uraimo/run-on-arch-action@master
+      uses: uraimo/run-on-arch-action@add_probes
       with:
         architecture: aarch64
         distribution: ubuntu18.04
