@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_phy_ch/sched_phy_resource.h"
 extern "C" {
 #include "lib/include/srsran/phy/dft/dft_precoding.h"
@@ -28,6 +30,9 @@ namespace srsenb {
 
 rbg_interval rbg_interval::find_first_interval(const rbgmask_t& mask)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   int rb_start = mask.find_lowest(0, mask.size());
   if (rb_start != -1) {
     int rb_end = mask.find_lowest(rb_start + 1, mask.size(), false);
@@ -75,6 +80,9 @@ RBInterval find_contiguous_interval(const RBMask& in_mask, uint32_t max_size)
 
 rbgmask_t find_available_rbgmask(const rbgmask_t& in_mask, uint32_t max_size)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   // 1's for free RBs
   rbgmask_t localmask = ~(in_mask);
 
@@ -100,6 +108,9 @@ rbg_interval find_empty_rbg_interval(uint32_t max_nof_rbgs, const rbgmask_t& cur
 
 rbgmask_t find_available_rbgmask(uint32_t max_nof_rbgs, bool is_contiguous, const rbgmask_t& current_mask)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  
   // Allocate enough RBs that accommodate pending data
   rbgmask_t newtx_mask(current_mask.size());
   if (is_contiguous) {

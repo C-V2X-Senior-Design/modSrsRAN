@@ -19,6 +19,10 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_ue_ctrl/sched_dl_cqi.h"
 #include "srsenb/hdr/stack/mac/schedulers/sched_base.h"
 
@@ -26,6 +30,9 @@ namespace srsenb {
 
 rbgmask_t sched_dl_cqi::get_optim_rbgmask(const rbgmask_t& dl_mask, uint32_t req_rbgs, bool max_flag) const
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   req_rbgs = std::min(req_rbgs, cell_nof_rbg);
   if (not subband_cqi_enabled()) {
     // in case of wideband, just find any available RBGs
@@ -62,6 +69,9 @@ rbgmask_t sched_dl_cqi::get_optim_rbgmask(const rbgmask_t& dl_mask, uint32_t req
 
 rbgmask_t find_min_cqi_rbgs(const rbgmask_t& mask, const sched_dl_cqi& dl_cqi, int& min_cqi)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+
   if (mask.none()) {
     min_cqi = -1;
     return mask;
@@ -94,6 +104,9 @@ rbgmask_t find_min_cqi_rbgs(const rbgmask_t& mask, const sched_dl_cqi& dl_cqi, i
 
 rbgmask_t remove_min_cqi_rbgs(const rbgmask_t& rbgmask, const sched_dl_cqi& dl_cqi)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  
   int       min_cqi;
   rbgmask_t minmask = find_min_cqi_rbgs(rbgmask, dl_cqi, min_cqi);
   if (min_cqi < 0) {

@@ -22,7 +22,17 @@
 #include "srsran/common/threads.h"
 #include "srsran/srsran.h"
 
+#include <complex.h>
+#include <bitset>
+#include <iostream>
+#include <iomanip>
+#include <limits>
+
+#include <fstream>
+#include <ctime>
+
 #include "srsenb/hdr/phy/lte/cc_worker.h"
+#include "srsenb/hdr/stack/mac/sched_phy_ch/sched_phy_resource.h"
 
 #define Error(fmt, ...)                                                                                                \
   if (SRSRAN_DEBUG_ENABLED)                                                                                            \
@@ -38,6 +48,7 @@
   logger.debug(fmt, ##__VA_ARGS__)
 
 using namespace std;
+// using std::filesystem::exists;
 
 // Enable this to log SI
 //#define LOG_THIS(a) 1
@@ -689,6 +700,13 @@ int cc_worker::read_pusch_d(cf_t* pdsch_d)
 {
   int nof_re = enb_ul.pusch.max_re;
   memcpy(pdsch_d, enb_ul.pusch.d, nof_re * sizeof(cf_t));
+
+  // ADDED: ouput pusch to terminal
+  // complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
+  // for (int i=0; i < nof_re; i++){
+  //   cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
+  // }
+
   return nof_re;
 }
 
@@ -696,8 +714,85 @@ int cc_worker::read_pucch_d(cf_t* pdsch_d)
 {
   int nof_re = SRSRAN_PUCCH_MAX_BITS / 2;
   memcpy(pdsch_d, enb_ul.pucch.z_tmp, nof_re * sizeof(cf_t));
+
+  // ADDED: ouput pucch to terminal
+  // complex<float>* pucch_array = (complex<float>*) enb_ul.pucch.z_tmp;
+  // for (int i=0; i < nof_re; i++){  
+  //   cout << "6363" << ieee_float_to_hex(pucch_array[i].real()) << ieee_float_to_hex(pucch_array[i].imag()) << endl; //(*pucch).real() << " + " << (*pucch).imag() << "i"<< endl;
+  // }
+
   return nof_re;
 }
 
 } // namespace lte
 } // namespace srsenb
+
+// ADDED
+string ieee_float_to_hex(float f)
+{
+    // source: // http://www.cplusplus.com/forum/general/63755/
+
+    static_assert( numeric_limits<float>::is_iec559,
+                   "native float must be an IEEE float" ) ;
+
+    union { float fval ;uint32_t ival ; };
+    fval = f ;
+
+    ostringstream stm ;
+    stm << hex << uppercase << ival ;
+
+    return stm.str() ;
+}
+
+// ADDED
+int output_probe(string text, string file_name){
+  // Call this function with `#include "srsenb/hdr/phy/lte/cc_worker.h"`
+  
+  // text refers to what you want to print
+  // file_name is the name of the file to be added to the probes/ directory
+
+  // example: output_probe(__FILE__, "rbgmask_t_probe.txt");
+
+  fstream outfile;
+  string file_path;
+
+  file_path = "/home/dragon/Code/modSrsRAN/probes/";
+  file_path.append(file_name);
+
+  outfile.open(file_path, ios_base::app);
+  if (outfile.is_open())
+    outfile << time(0) << ": " << text << endl;
+  else
+    cout << "Could Not Print " << endl;
+  return 0;
+}
+
+// ADDED 
+int probe_rbg_mask(srsenb::rbgmask_t mask, string file_name){
+  // print rbg_mask contents to file
+
+  fstream outfile;
+  string file_path;
+
+  string s;
+  s.assign(mask.size(), '0');
+  
+  file_path = "/home/dragon/Code/modSrsRAN/probes/";
+  file_path.append(file_name);
+
+  outfile.open(file_path, ios_base::app);
+  if (outfile.is_open()){
+    outfile << time(0) << ": ";
+
+    outfile << "size: " << mask.size() << ", ";
+
+    for (size_t i = mask.size(); i > 0; --i) {
+      outfile << (mask.test(i - 1) ? '1' : '0');
+    }
+
+    outfile << endl;
+  }
+  else
+    cout << "Could Not Print " << endl;
+  return 0;
+}

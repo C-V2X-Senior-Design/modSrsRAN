@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/schedulers/sched_base.h"
 
 namespace srsenb {
@@ -61,6 +63,12 @@ alloc_result try_dl_retx_alloc(sf_sched& tti_sched, sched_ue& ue, const dl_harq_
 {
   // Try to reuse the same mask
   rbgmask_t    retx_mask = h.get_rbgmask();
+
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_base::try_dl_retx_alloc", "sched_grid.txt");
+  probe_rbg_mask(retx_mask, "sched_grid.txt");
+
   alloc_result code      = tti_sched.alloc_dl_user(&ue, retx_mask, h.get_id());
   if (code != alloc_result::sch_collision) {
     return code;
@@ -84,6 +92,12 @@ alloc_result try_dl_newtx_alloc_greedy(sf_sched& tti_sched, sched_ue& ue, const 
 
   // If all RBGs are occupied, the next steps can be shortcut
   const rbgmask_t& current_mask = tti_sched.get_dl_mask();
+
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_base::try_dl_newtx_alloc_greedy", "sched_grid.txt");
+  probe_rbg_mask(current_mask, "sched_grid.txt");
+
   if (current_mask.all()) {
     return alloc_result::no_sch_space;
   }

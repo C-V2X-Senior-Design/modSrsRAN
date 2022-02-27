@@ -19,6 +19,8 @@
  *
  */
 
+#include "srsenb/hdr/phy/lte/cc_worker.h"
+
 #include "srsenb/hdr/stack/mac/sched_grid.h"
 #include "srsenb/hdr/stack/mac/sched_helpers.h"
 #include "srsran/common/string_helpers.h"
@@ -137,6 +139,10 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
                                  sched_ue*    user,
                                  bool         has_pusch_grant)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl", "sched_grid.txt");
+
   // Check RBG collision
   if ((dl_mask & alloc_mask).any()) {
     logger.debug("SCHED: Provided RBG mask collides with allocation previously made.\n");
@@ -161,6 +167,9 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
   // Allocate RBGs
   dl_mask |= alloc_mask;
 
+  // ADDED
+  probe_rbg_mask(alloc_mask, "sched_grid.txt");
+
   return alloc_result::success;
 }
 
@@ -177,6 +186,10 @@ alloc_result sf_grid_t::alloc_dl_ctrl(uint32_t aggr_idx, rbg_interval rbg_range,
     return alloc_result::sch_collision;
   }
 
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_ctrl", "sched_grid.txt");
+
   // allocate DCI and RBGs
   rbgmask_t new_mask(dl_mask.size());
   new_mask.fill(rbg_range.start(), rbg_range.stop());
@@ -186,6 +199,10 @@ alloc_result sf_grid_t::alloc_dl_ctrl(uint32_t aggr_idx, rbg_interval rbg_range,
 //! Allocates CCEs and RBs for a user DL data alloc.
 alloc_result sf_grid_t::alloc_dl_data(sched_ue* user, const rbgmask_t& user_mask, bool has_pusch_grant)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_data", "sched_grid.txt");
+
   srsran_dci_format_t dci_format = user->get_dci_format();
   uint32_t            nof_bits   = srsran_dci_format_sizeof(&cc_cfg->cfg.cell, nullptr, nullptr, dci_format);
   uint32_t            aggr_idx   = user->get_aggr_level(cc_cfg->enb_cc_idx, nof_bits);
@@ -238,6 +255,10 @@ void sf_grid_t::rem_last_alloc_dl(rbg_interval rbgs)
     logger.error("Remove DL alloc called for empty Subframe RB grid");
     return;
   }
+
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("rem_last_alloc_dl", "sched_grid.txt");
 
   pdcch_alloc.rem_last_dci();
   rbgmask_t rbgmask(dl_mask.size());
@@ -466,6 +487,11 @@ bool is_periodic_cqi_expected(const sched_interface::ue_cfg_t& ue_cfg, tti_point
 
 alloc_result sf_sched::alloc_dl_user(sched_ue* user, const rbgmask_t& user_mask, uint32_t pid)
 {
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("alloc_dl_user", "sched_grid.txt");
+  probe_rbg_mask(user_mask, "sched_grid.txt");
+
   if (data_allocs.full()) {
     logger.warning("SCHED: Maximum number of DL allocations reached");
     return alloc_result::no_grant_space;
