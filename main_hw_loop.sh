@@ -5,7 +5,13 @@ rm -r probes
 mkdir probes
 
 # Set time length to collect data
-# TIME_LENGTH=100
+if [ $# -eq 0 ]
+	then
+		TIME_LENGTH=5
+else
+	TIME_LENGTH=$1
+fi
+
 SFILE="timing_iq/timing_pusch.txt"
 CFILE="timing_iq/timing_pucch.txt" 
 RSFILE="timing_iq/timing_results.txt"

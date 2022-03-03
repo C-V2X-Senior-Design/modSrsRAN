@@ -701,10 +701,13 @@ int cc_worker::read_pusch_d(cf_t* pdsch_d)
   int nof_re = enb_ul.pusch.max_re;
   memcpy(pdsch_d, enb_ul.pusch.d, nof_re * sizeof(cf_t));
 
-  // ADDED: ouput pusch to terminal
+  // ADDED: ouput pusch to probe
   // complex<float>* pusch_array = (complex<float>*) enb_ul.pusch.d;
   // for (int i=0; i < nof_re; i++){
-  //   cout << "7363" << ieee_float_to_hex(pusch_array[i].real()) << ieee_float_to_hex(pusch_array[i].imag()) <<  endl;
+  //   hex_output = "7363";
+  //   hex_output.append(ieee_float_to_hex(pusch_array[i].real()));
+  //   hex_output.append(ieee_float_to_hex(pusch_array[i].imag()));
+  //   output_probe(hex_output, "iq_probe");
   // }
 
   return nof_re;
@@ -715,10 +718,15 @@ int cc_worker::read_pucch_d(cf_t* pdsch_d)
   int nof_re = SRSRAN_PUCCH_MAX_BITS / 2;
   memcpy(pdsch_d, enb_ul.pucch.z_tmp, nof_re * sizeof(cf_t));
 
-  // ADDED: ouput pucch to terminal
+  // ADDED: ouput pucch to probe
+  string hex_output;
+
   // complex<float>* pucch_array = (complex<float>*) enb_ul.pucch.z_tmp;
   // for (int i=0; i < nof_re; i++){  
-  //   cout << "6363" << ieee_float_to_hex(pucch_array[i].real()) << ieee_float_to_hex(pucch_array[i].imag()) << endl; //(*pucch).real() << " + " << (*pucch).imag() << "i"<< endl;
+  //   hex_output = "6363";
+  //   hex_output.append(ieee_float_to_hex(pucch_array[i].real()));
+  //   hex_output.append(ieee_float_to_hex(pucch_array[i].imag()));
+  //   output_probe(hex_output, "iq_probe");
   // }
 
   return nof_re;
