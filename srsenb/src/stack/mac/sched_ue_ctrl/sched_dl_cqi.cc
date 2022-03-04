@@ -32,6 +32,8 @@ rbgmask_t sched_dl_cqi::get_optim_rbgmask(const rbgmask_t& dl_mask, uint32_t req
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_dl_cqi::get_optim_rbgmask", "rbgmask_values.txt");
+  probe_rbg_mask(dl_mask, "rbgmask_values.txt");
 
   req_rbgs = std::min(req_rbgs, cell_nof_rbg);
   if (not subband_cqi_enabled()) {
@@ -71,6 +73,8 @@ rbgmask_t find_min_cqi_rbgs(const rbgmask_t& mask, const sched_dl_cqi& dl_cqi, i
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_dl_cqi::find_min_cqi_rbgs", "rbgmask_values.txt");
+  probe_rbg_mask(mask, "rbgmask_values.txt");
 
   if (mask.none()) {
     min_cqi = -1;
@@ -106,7 +110,9 @@ rbgmask_t remove_min_cqi_rbgs(const rbgmask_t& rbgmask, const sched_dl_cqi& dl_c
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
-  
+  output_probe("sched_dl_cqi::remove_min_cqi_rbgs", "rbgmask_values.txt");
+  probe_rbg_mask(rbgmask, "rbgmask_values.txt");
+
   int       min_cqi;
   rbgmask_t minmask = find_min_cqi_rbgs(rbgmask, dl_cqi, min_cqi);
   if (min_cqi < 0) {
