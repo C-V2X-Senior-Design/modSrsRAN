@@ -17,7 +17,7 @@ For license details, see LICENSE file.
 Team 13
 =======
 
-Team 13 is a group of Boston University Students modifying and using the srsRAN library to model and study C-V2X traffic.
+Team 13 is a group of Boston University Students modifying and using the srsRAN library to model and study C-V2X traffic. A comprehensive changelog of all edits made to the base SrsRAN cod  can be found [here](https://github.com/C-V2X-Senior-Design/modSrsRAN/blob/add_probes/changelog_team13.md)
 
 Building & Installation
 =======
