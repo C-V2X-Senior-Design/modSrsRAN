@@ -4,6 +4,16 @@
 
 ### Added
 
+- added `iq_probe` to `cc_worker.cc`
+
+### Changed
+
+- chagned `main_hw_loop.sh` to accept input time lengths
+
+## [2022.2.21] add_probes
+
+### Added
+
 - added function `output_probe` to `cc_worker.cc` and `cc_worker.h`
 
 - added script `run_probe.sh` which refreshes the `probes` folder and runs `srsenb`

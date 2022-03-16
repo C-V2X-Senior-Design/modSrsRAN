@@ -319,6 +319,8 @@ tbs_info sched_ue::allocate_new_dl_mac_pdu(sched::dl_sched_data_t* data,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::allocate_new_dl_mac_pdu", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   srsran_dci_dl_t* dci     = &data->dci;
   tbs_info         tb_info = compute_mcs_and_tbs(enb_cc_idx, tti_tx_dl, user_mask, cfi, *dci);
@@ -363,6 +365,8 @@ int sched_ue::generate_dl_dci_format(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::generate_dl_dci_format", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   srsran_dci_format_t dci_format = get_dci_format();
   int                 tbs_bytes  = 0;
@@ -408,6 +412,8 @@ int sched_ue::generate_format1a(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::generate_format1a", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   srsran_dci_dl_t* dci = &data->dci;
 
@@ -435,6 +441,8 @@ int sched_ue::generate_format1_common(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::generate_format1_common", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   dl_harq_proc*    h   = &cells[enb_cc_idx].harq_ent.dl_harq_procs()[pid];
   srsran_dci_dl_t* dci = &data->dci;
@@ -467,6 +475,8 @@ int sched_ue::generate_format1(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::generate_format1", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   srsran_dci_dl_t* dci = &data->dci;
 
@@ -493,6 +503,8 @@ tbs_info sched_ue::compute_mcs_and_tbs(uint32_t               enb_cc_idx,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::compute_mcs_and_tbs", "rbgmask_values.txt");
+  probe_rbg_mask(rbg_mask, "rbgmask_values.txt");
 
   srsran_assert(cells[enb_cc_idx].configured(), "computation of MCS/TBS called for non-configured CC");
   srsran::interval<uint32_t> req_bytes = get_requested_dl_bytes(enb_cc_idx);
@@ -521,6 +533,8 @@ int sched_ue::generate_format2a(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_ue::generate_format2a", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   dl_harq_proc* h                    = &cells[enb_cc_idx].harq_ent.dl_harq_procs()[pid];
   bool          tb_en[SRSRAN_MAX_TB] = {false};
@@ -593,7 +607,9 @@ int sched_ue::generate_format2(uint32_t                          pid,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
-  
+  output_probe("sched_ue::generate_format2", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
+
   /* Call Format 2a (common) */
   int ret = generate_format2a(pid, data, tti_tx_dl, enb_cc_idx, cfi, user_mask);
 

@@ -139,10 +139,6 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
                                  sched_ue*    user,
                                  bool         has_pusch_grant)
 {
-  // ADDED
-  output_probe(__FILE__, "rbgmask_t_probe.txt");
-  output_probe("alloc_dl", "sched_grid.txt");
-
   // Check RBG collision
   if ((dl_mask & alloc_mask).any()) {
     logger.debug("SCHED: Provided RBG mask collides with allocation previously made.\n");
@@ -168,7 +164,9 @@ alloc_result sf_grid_t::alloc_dl(uint32_t     aggr_idx,
   dl_mask |= alloc_mask;
 
   // ADDED
-  probe_rbg_mask(alloc_mask, "sched_grid.txt");
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_grid:alloc_dl", "rbgmask_values.txt");
+  probe_rbg_mask(alloc_mask, "rbgmask_values.txt");
 
   return alloc_result::success;
 }
@@ -186,13 +184,15 @@ alloc_result sf_grid_t::alloc_dl_ctrl(uint32_t aggr_idx, rbg_interval rbg_range,
     return alloc_result::sch_collision;
   }
 
-  // ADDED
-  output_probe(__FILE__, "rbgmask_t_probe.txt");
-  output_probe("alloc_dl_ctrl", "sched_grid.txt");
-
   // allocate DCI and RBGs
   rbgmask_t new_mask(dl_mask.size());
   new_mask.fill(rbg_range.start(), rbg_range.stop());
+
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("sched_grid:alloc_dl_ctrl", "rbgmask_values.txt");
+  probe_rbg_mask(new_mask, "rbgmask_values.txt");
+
   return alloc_dl(aggr_idx, alloc_type, new_mask);
 }
 
@@ -201,7 +201,8 @@ alloc_result sf_grid_t::alloc_dl_data(sched_ue* user, const rbgmask_t& user_mask
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
-  output_probe("alloc_dl_data", "sched_grid.txt");
+  output_probe("sched_grid::alloc_dl_data", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   srsran_dci_format_t dci_format = user->get_dci_format();
   uint32_t            nof_bits   = srsran_dci_format_sizeof(&cc_cfg->cfg.cell, nullptr, nullptr, dci_format);
@@ -256,14 +257,15 @@ void sf_grid_t::rem_last_alloc_dl(rbg_interval rbgs)
     return;
   }
 
-  // ADDED
-  output_probe(__FILE__, "rbgmask_t_probe.txt");
-  output_probe("rem_last_alloc_dl", "sched_grid.txt");
-
   pdcch_alloc.rem_last_dci();
   rbgmask_t rbgmask(dl_mask.size());
   rbgmask.fill(rbgs.start(), rbgs.stop());
   dl_mask &= ~rbgmask;
+
+  // ADDED
+  output_probe(__FILE__, "rbgmask_t_probe.txt");
+  output_probe("rem_last_alloc_dl", "rbgmask_values.txt");
+  probe_rbg_mask(rbgmask, "rbgmask_values.txt");
 }
 
 alloc_result sf_grid_t::reserve_ul_prbs(prb_interval alloc, bool strict)
@@ -489,8 +491,8 @@ alloc_result sf_sched::alloc_dl_user(sched_ue* user, const rbgmask_t& user_mask,
 {
   // ADDED
   output_probe(__FILE__, "rbgmask_t_probe.txt");
-  output_probe("alloc_dl_user", "sched_grid.txt");
-  probe_rbg_mask(user_mask, "sched_grid.txt");
+  output_probe("alloc_dl_user", "rbgmask_values.txt");
+  probe_rbg_mask(user_mask, "rbgmask_values.txt");
 
   if (data_allocs.full()) {
     logger.warning("SCHED: Maximum number of DL allocations reached");
