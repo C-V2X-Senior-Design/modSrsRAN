@@ -338,9 +338,16 @@ int srsran_ue_sync_set_cell(srsran_ue_sync_t* q, srsran_cell_t cell)
 
     q->cell     = cell;
     q->fft_size = srsran_symbol_sz(q->cell.nof_prb);
+    printf("cell.nof.prb: %d\n", cell.nof_prb); // ADDED FOR DEBUG
+    printf("q->max_prb:%d\n", q->max_prb);  // ADDED FOR DEBUG
+    printf("FFT SIZE IS %u\n", q->fft_size); // ADDED FOR DEBUG -- IS THIS 0?
     q->sf_len   = SRSRAN_SF_LEN(q->fft_size);
-    srsran_sync_set_cp(&q->sfind, q->cell.cp);
-    srsran_sync_set_cp(&q->strack, q->cell.cp);
+    printf("\n\n\n\nGAHHHHHHHHHHHH1111\n\n\n");  // ADDED TO DEBUG
+    // q->sfind.fft_size = q->fft_size; // ADDED TO DEBUG -- take out
+    // srsran_sync_set_cp(&q->sfind, q->cell.cp); // ADDED TO DEBUG -- take out
+    printf("\n\n\n\nGAHHHHHHHHHHHH222\n\n\n");  // ADDED TO DEBUG
+    // q->strack.fft_size = q->fft_size; // ADDED TO DEBUG -- take out
+    // srsran_sync_set_cp(&q->strack, q->cell.cp); // ADDED TO DEBUG -- take out
     if (cell.id == 1000) {
       /* If the cell is unkown, we search PSS/SSS in 5 ms */
       q->nof_recv_sf = 5;

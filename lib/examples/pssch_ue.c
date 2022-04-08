@@ -369,6 +369,7 @@ int main(int argc, char** argv)
     cell.cp            = SRSRAN_CP_NORM;
     cell.nof_ports     = 1;
 
+    // ADDED : COMMENTED OUT THIS PART TO TRY TO USE SYNC_MODE_PSS INSTEAD OF GNSS
     if (srsran_ue_sync_init_multi_decim_mode(&ue_sync,
                                              cell.nof_prb,
                                              false,
@@ -380,6 +381,20 @@ int main(int argc, char** argv)
       fprintf(stderr, "Error initiating sync_gnss\n");
       exit(-1);
     }
+    
+    // ADDED : START OF CODE USING SYNC_MODE_PSS, INSTEAD OF GNSS
+    // if (srsran_ue_sync_init_multi_decim_mode(&ue_sync,
+    //                                          cell.nof_prb,
+    //                                          false,
+    //                                          srsran_rf_recv_wrapper,
+    //                                          prog_args.nof_rx_antennas,
+    //                                          (void*)&radio,
+    //                                          1,
+    //                                          SYNC_MODE_PSS)) {
+    //   fprintf(stderr, "Error initiating sync_gnss\n");
+    //   exit(-1);
+    // }
+    // ADDED : END OF CODE USING SYNC_MODE_PSS, INSTEAD OF GNSS
 
     if (srsran_ue_sync_set_cell(&ue_sync, cell)) {
       ERROR("Error initiating ue_sync");

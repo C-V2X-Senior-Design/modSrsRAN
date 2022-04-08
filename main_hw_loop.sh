@@ -19,6 +19,8 @@ RSFILE="timing_iq/timing_results.txt"
 #Check/Add the Python executable to the shell PATH environment
 #Check/Add ~/Code/srsRAN directory to the path 
 
+echo "\n\n\n\nSTARTING\n\n\n\n"
+
 ### SET NAMESPACE ###
 sudo ip netns add ue1
 
@@ -44,11 +46,15 @@ sleep 5
 sleep $TIME_LENGTH
 
 # kills all srsenb processes, this works!!
-pgrep srsenb | xargs sudo kill
+pgrep srsenb | xargs sudo kill & 
 # kill all srsue processes
-pgrep srsue | xargs sudo kill
+pgrep srsue | xargs sudo kill &
 # kill all srsepc processes
-pgrep srsepc | xargs sudo kill
+pgrep srsepc | xargs sudo kill & 
+# kills all children
+sleep 10
+echo "\n\n\n\nKILLING PROCESSES\n\n\n\n"
+kill -TERM -$$
 
 #TODO: Need to figure out how to let Python program shut down without losing 
 #any work in progress 

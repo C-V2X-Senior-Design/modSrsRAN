@@ -431,12 +431,22 @@ srsran_cp_t srsran_sync_get_cp(srsran_sync_t* q)
 void srsran_sync_set_cp(srsran_sync_t* q, srsran_cp_t cp)
 {
   q->cp     = cp;
+  printf("DEBUG1\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
   q->cp_len = SRSRAN_CP_ISNORM(q->cp) ? SRSRAN_CP_LEN_NORM(1, q->fft_size) : SRSRAN_CP_LEN_EXT(q->fft_size);
+  printf("DEBUG2\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
+  printf("THE FRAME SIZE IS %u\n", q->frame_size); // ADDED FOR DEBUG 
   if (q->frame_size < q->fft_size) {
+    printf("DEBUG3\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
     q->nof_symbols = 1;
   } else {
-    q->nof_symbols = q->frame_size / (q->fft_size + q->cp_len) - 1;
+    printf("DEBUG4\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
+    printf("THE DENOMINATOR IS %u\n", q->fft_size + q->cp_len); // ADDED FOR DEBUG -- IS THIS 0?
+    printf("FFT SIZE IS %u\n", q->fft_size); // ADDED FOR DEBUG -- IS THIS 0?
+    printf("CP LEN IS %u\n", q->cp_len); // ADDED FOR DEBUG -- IS THIS 0?
+    q->nof_symbols = q->frame_size / (q->fft_size + q->cp_len) - 1;   // ADDED COMMENT: FLOATING POINT EXCEPTION HAPPENING HERE
+    printf("DEBUG6\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
   }
+  printf("DEBUG5\n");   // ADDED TO FIND THE FLOATING PT EXCEPTION
 }
 
 void srsran_sync_set_sss_algorithm(srsran_sync_t* q, sss_alg_t alg)

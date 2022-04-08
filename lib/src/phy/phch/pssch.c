@@ -462,9 +462,9 @@ int srsran_pssch_decode(srsran_pssch_t* q, cf_t* equalized_sf_syms, uint8_t* out
       srsran_crc_attach(&q->cb_crc, q->c_r, (int)(K_r - L));
 
       // CRC check
-      if (srsran_bit_diff(q->cb_crc_temp, &q->c_r[(K_r - L)], L) != 0) {
-        return SRSRAN_ERROR;
-      }
+      // if (srsran_bit_diff(q->cb_crc_temp, &q->c_r[(K_r - L)], L) != 0) {  // ADDED : COMMENTED LINE OUT FOR DEBUGGING
+      //   return SRSRAN_ERROR;
+      // }
     }
 
     // Code Block Concatenation, dettach CRC and remove filler bits
@@ -484,9 +484,9 @@ int srsran_pssch_decode(srsran_pssch_t* q, cf_t* equalized_sf_syms, uint8_t* out
   srsran_crc_attach(&q->tb_crc, q->b, (int)(B - SRSRAN_PSSCH_CRC_LEN));
 
   // CRC check
-  if (srsran_bit_diff(q->tb_crc_temp, &q->b[(B - SRSRAN_PSSCH_CRC_LEN)], SRSRAN_PSSCH_CRC_LEN) != 0) {
-    return SRSRAN_ERROR;
-  }
+  // if (srsran_bit_diff(q->tb_crc_temp, &q->b[(B - SRSRAN_PSSCH_CRC_LEN)], SRSRAN_PSSCH_CRC_LEN) != 0) { // ADDED : COMMENTED LINE OUT FOR DEBUGGING
+  //   return SRSRAN_ERROR;
+  // }
 
   // Remove CRC and copy to output buffer
   memcpy(output, q->b, sizeof(uint8_t) * q->sl_sch_tb_len);
