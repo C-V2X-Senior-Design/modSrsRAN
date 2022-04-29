@@ -1,4 +1,4 @@
-srsRAN
+modSrsRAN
 ======
 
 srsRAN is a 4G/5G software radio suite developed by [SRS](http://www.srs.io).
